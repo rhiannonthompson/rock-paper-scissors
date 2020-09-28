@@ -6,7 +6,6 @@
     <title>Rock Paper Scissors</title>
 
     <style>
-
         body {
             background-color: rgb(214, 214, 214);
             font-family: monospace;
@@ -48,7 +47,6 @@
             color: beige;
             cursor: pointer;
         }
-        
     </style>
 
 </head>
@@ -122,11 +120,11 @@
         }
 
         function playGame(rounds) {
-            
+
             let result;
             let userScore = 0;
             let computerScore = 0;
-            
+
             for (let i = 0; i < rounds; i++) {
                 result = playRound(userPlay(), computerPlay());
                 if (result === "computer") {
@@ -144,7 +142,7 @@
                 alert("No one wins!");
             }
         }
-
+        
     </script>
 
 </body>

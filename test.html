@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Rock Paper Scissors</title>
+
+    <style>
+        body {
+            background-color: rgb(214, 214, 214);
+            font-family: monospace;
+            color: rgb(56, 54, 51);
+        }
+
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            background-color: rgb(224, 224, 224);
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            position: relative;
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 30px;
+        }
+
+        #text {
+            height: 50px;
+            width: 30%;
+            margin: 10px auto;
+        }
+
+        .btn {
+            padding: 8px;
+            background-color: rgb(224, 115, 115);
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+            border: none;
+            margin: 20px auto;
+        }
+
+        .btn:hover {
+            background-color: rgb(148, 38, 38);
+            color: beige;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Rock Paper Scissors</h1>
+        <h2>YOU MUST PLAY!</h2>
+        <input id="rock" type="button" value="rock" />
+        <br>
+        <input id="paper" type="button" value="paper" />
+        <br>
+        <input id="paper" type="button" value="scissors" />
+
+        <p id="user"></p>
+        <p id="computer"></p>
+        <p id="message"></p>
+        <p id="winning-message"></p>
+    </div>
+
+    <script>
+        const ROCK = 1;
+        const PAPER = 2;
+        const SCISSORS = 3;
+
+        let userInput;
+        let computerWins;
+        let userWins;
+        let userScore = 0;
+        let computerScore = 0;
+        const winningMessage = document.querySelector("#winning-message");
+        const user = document.querySelector("#user");
+        const computer = document.querySelector("#computer");
+
+
+        const buttons = document.querySelectorAll("input");
+        for (const button of buttons) {
+            button.addEventListener("click", () => {
+                if (button.value === "rock") {
+                    userInput = ROCK;
+                } else if (button.value === "paper") {
+                    userInput = PAPER;
+                } else {
+                    userInput = SCISSORS;
+                }
+                if (!computerWins && !userWins) {
+                    let roundWinner = playRound(userInput, computerPlay());
+                    updateGame(roundWinner);
+                }
+            })
+        }
+
+        function updateGame(roundWinner) {
+            if (roundWinner === "computer") {
+                computerScore += 1;
+            } else if (roundWinner === "user") {
+                userScore += 1;
+            }
+            user.textContent = "User:" + userScore;
+            computer.textContent = "Computer:" + computerScore;
+            if (computerScore === 5) {
+                computerWins = true;
+                winningMessage.textContent = "Computer wins, You loose!"
+            } else if (userScore === 5) {
+                userWins = true;
+                winningMessage.textContent = "You win, computer looses!"
+            }
+        }
+
+        function computerPlay() {
+            return Math.floor(Math.random() * 3) + 1;
+        }
+
+
+        function playRound(userSelection, computerSelection) {
+            let message = document.querySelector("#message");
+            let roundWinner = "draw";
+            if (computerSelection === ROCK && userSelection === PAPER) {
+                roundWinner = "user";
+                message.textContent = "You win! Paper wraps Rock!";
+            } else if (computerSelection === ROCK && userSelection === SCISSORS) {
+                roundWinner = "computer";
+                message.textContent = "You lose! Rock blunts Scissors!";
+            } else if (computerSelection === PAPER && userSelection === ROCK) {
+                roundWinner = "computer";
+                message.textContent = "You lose! Paper wraps Rock!";
+            } else if (computerSelection === PAPER && userSelection === SCISSORS) {
+                roundWinner = "user";
+                message.textContent = "You win! Scissors cut paper!";
+            } else if (computerSelection === SCISSORS && userSelection === ROCK) {
+                roundWinner = "user";
+                message.textContent = "You win! Rock blunts Scissors!";
+            } else if (computerSelection === SCISSORS && userSelection === PAPER) {
+                roundWinner = "computer";
+                message.textContent = "You lose! Scissors cuts Paper!";
+            } else {
+                message.textContent = "It's a draw!";
+            }
+            return roundWinner;
+        }
+    </script>
+
+</body>
+
+</html>
